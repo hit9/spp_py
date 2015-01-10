@@ -4,6 +4,8 @@ Simple Protocol Parser
 *Actually, this is [ssdb](http://ssdb.io)'s network protocol, and I think it can
 be used on other projects.*
 
+Support Py2.6+/3.3+
+
 Protocol
 --------
 
@@ -53,7 +55,7 @@ while 1:
 API Ref
 -------
 
-- parser.feed(bytes)
+- parser.feed(str)
 - parser.get()
 - parser.clear()
 
