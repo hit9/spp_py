@@ -53,7 +53,7 @@ while 1:
 API Ref
 -------
 
-- parser.feed(bytes/buffer)
+- parser.feed(bytes)
 - parser.get()
 - parser.clear()
 
