@@ -1,7 +1,0 @@
-.*.swp
-.*.swo
-.pyc
-venv
-*.o
-*.out
-spp_test
