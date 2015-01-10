@@ -433,7 +433,6 @@ struct __pyx_obj_3spp_Parser;
 struct __pyx_obj_3spp_Parser {
   PyObject_HEAD
   spp_t *parser;
-  PyObject *values;
 };
 
 #ifndef CYTHON_REFNANNY
@@ -563,13 +562,6 @@ static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
-#define __Pyx_PyObject_DelSlice(obj, cstart, cstop, py_start, py_stop, py_slice, has_cstart, has_cstop, wraparound) \
-    __Pyx_PyObject_SetSlice(obj, (PyObject*)NULL, cstart, cstop, py_start, py_stop, py_slice, has_cstart, has_cstop, wraparound)
-static CYTHON_INLINE int __Pyx_PyObject_SetSlice(
-        PyObject* obj, PyObject* value, Py_ssize_t cstart, Py_ssize_t cstop,
-        PyObject** py_start, PyObject** py_stop, PyObject** py_slice,
-        int has_cstart, int has_cstop, int wraparound);
-
 static PyObject *__Pyx_CalculateMetaclass(PyTypeObject *metaclass, PyObject *bases);
 
 static PyObject *__Pyx_Py3MetaclassPrepare(PyObject *metaclass, PyObject *bases, PyObject *name, PyObject *qualname,
@@ -618,9 +610,6 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
 static PyObject *__pyx_pf_3spp_6Parser_4get(struct __pyx_obj_3spp_Parser *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_3spp_6Parser_6clear(struct __pyx_obj_3spp_Parser *__pyx_v_self); /* proto */
 static void __pyx_pf_3spp_6Parser_8__dealloc__(struct __pyx_obj_3spp_Parser *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3spp_6Parser_6values___get__(struct __pyx_obj_3spp_Parser *__pyx_v_self); /* proto */
-static int __pyx_pf_3spp_6Parser_6values_2__set__(struct __pyx_obj_3spp_Parser *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static int __pyx_pf_3spp_6Parser_6values_4__del__(struct __pyx_obj_3spp_Parser *__pyx_v_self); /* proto */
 static PyObject *__pyx_tp_new_3spp_Parser(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static char __pyx_k_doc[] = "__doc__";
 static char __pyx_k_spp[] = "spp";
@@ -655,7 +644,6 @@ static PyObject *__pyx_n_s_strict;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_utf8;
 static PyObject *__pyx_tuple_;
-static PyObject *__pyx_slice__2;
 
 /* "spp.pyx":39
  * 
@@ -728,8 +716,8 @@ static void __pyx_f_3spp_handler(spp_t *__pyx_v_parser, char *__pyx_v_data, size
   __Pyx_RefNannyFinishContext();
 }
 
-/* "spp.pyx":50
- *     cdef public object values
+/* "spp.pyx":49
+ *     cdef spp_t *parser
  * 
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         cdef spp_t *parser = spp_new()
@@ -756,65 +744,37 @@ static int __pyx_pf_3spp_6Parser___init__(struct __pyx_obj_3spp_Parser *__pyx_v_
   spp_t *__pyx_v_parser;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "spp.pyx":51
+  /* "spp.pyx":50
  * 
  *     def __init__(self):
  *         cdef spp_t *parser = spp_new()             # <<<<<<<<<<<<<<
  *         self.parser = parser
- *         self.values = []
+ *         self.parser[0].handler = &handler
  */
   __pyx_v_parser = spp_new();
 
-  /* "spp.pyx":52
+  /* "spp.pyx":51
  *     def __init__(self):
  *         cdef spp_t *parser = spp_new()
  *         self.parser = parser             # <<<<<<<<<<<<<<
- *         self.values = []
- *         self.parser[0].priv = <void *>(self.values)
- */
-  __pyx_v_self->parser = __pyx_v_parser;
-
-  /* "spp.pyx":53
- *         cdef spp_t *parser = spp_new()
- *         self.parser = parser
- *         self.values = []             # <<<<<<<<<<<<<<
- *         self.parser[0].priv = <void *>(self.values)
- *         self.parser[0].handler = &handler
- */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_1);
-  __Pyx_GOTREF(__pyx_v_self->values);
-  __Pyx_DECREF(__pyx_v_self->values);
-  __pyx_v_self->values = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "spp.pyx":54
- *         self.parser = parser
- *         self.values = []
- *         self.parser[0].priv = <void *>(self.values)             # <<<<<<<<<<<<<<
  *         self.parser[0].handler = &handler
  * 
  */
-  (__pyx_v_self->parser[0]).priv = ((void *)__pyx_v_self->values);
+  __pyx_v_self->parser = __pyx_v_parser;
 
-  /* "spp.pyx":55
- *         self.values = []
- *         self.parser[0].priv = <void *>(self.values)
+  /* "spp.pyx":52
+ *         cdef spp_t *parser = spp_new()
+ *         self.parser = parser
  *         self.parser[0].handler = &handler             # <<<<<<<<<<<<<<
  * 
  *     def feed(self, text):
  */
   (__pyx_v_self->parser[0]).handler = (&__pyx_f_3spp_handler);
 
-  /* "spp.pyx":50
- *     cdef public object values
+  /* "spp.pyx":49
+ *     cdef spp_t *parser
  * 
  *     def __init__(self):             # <<<<<<<<<<<<<<
  *         cdef spp_t *parser = spp_new()
@@ -823,17 +783,11 @@ static int __pyx_pf_3spp_6Parser___init__(struct __pyx_obj_3spp_Parser *__pyx_v_
 
   /* function exit code */
   __pyx_r = 0;
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("spp.Parser.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = -1;
-  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "spp.pyx":57
+/* "spp.pyx":54
  *         self.parser[0].handler = &handler
  * 
  *     def feed(self, text):             # <<<<<<<<<<<<<<
@@ -870,44 +824,44 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("feed", 0);
 
-  /* "spp.pyx":60
+  /* "spp.pyx":57
  *         cdef bytes btext
  * 
  *         if hasattr(text, 'encode'):             # <<<<<<<<<<<<<<
  *             btext = text.encode('utf8', 'strict')
  *         else:
  */
-  __pyx_t_1 = PyObject_HasAttr(__pyx_v_text, __pyx_n_s_encode); if (unlikely(__pyx_t_1 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyObject_HasAttr(__pyx_v_text, __pyx_n_s_encode); if (unlikely(__pyx_t_1 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 57; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "spp.pyx":61
+    /* "spp.pyx":58
  * 
  *         if hasattr(text, 'encode'):
  *             btext = text.encode('utf8', 'strict')             # <<<<<<<<<<<<<<
  *         else:
  *             btext = text  # assumed utf8 string
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_text, __pyx_n_s_encode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_text, __pyx_n_s_encode); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (!(likely(PyBytes_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyBytes_CheckExact(__pyx_t_4))||((__pyx_t_4) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_t_4)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_v_btext = ((PyObject*)__pyx_t_4);
     __pyx_t_4 = 0;
     goto __pyx_L3;
   }
   /*else*/ {
 
-    /* "spp.pyx":63
+    /* "spp.pyx":60
  *             btext = text.encode('utf8', 'strict')
  *         else:
  *             btext = text  # assumed utf8 string             # <<<<<<<<<<<<<<
  * 
  *         cdef char *data = btext
  */
-    if (!(likely(PyBytes_CheckExact(__pyx_v_text))||((__pyx_v_text) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_v_text)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!(likely(PyBytes_CheckExact(__pyx_v_text))||((__pyx_v_text) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "bytes", Py_TYPE(__pyx_v_text)->tp_name), 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_4 = __pyx_v_text;
     __Pyx_INCREF(__pyx_t_4);
     __pyx_v_btext = ((PyObject*)__pyx_t_4);
@@ -915,17 +869,17 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
   }
   __pyx_L3:;
 
-  /* "spp.pyx":65
+  /* "spp.pyx":62
  *             btext = text  # assumed utf8 string
  * 
  *         cdef char *data = btext             # <<<<<<<<<<<<<<
  *         cdef int res = spp_feed(self.parser, data)
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_AsString(__pyx_v_btext); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyObject_AsString(__pyx_v_btext); if (unlikely((!__pyx_t_5) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_data = __pyx_t_5;
 
-  /* "spp.pyx":66
+  /* "spp.pyx":63
  * 
  *         cdef char *data = btext
  *         cdef int res = spp_feed(self.parser, data)             # <<<<<<<<<<<<<<
@@ -934,7 +888,7 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
  */
   __pyx_v_res = spp_feed(__pyx_v_self->parser, __pyx_v_data);
 
-  /* "spp.pyx":68
+  /* "spp.pyx":65
  *         cdef int res = spp_feed(self.parser, data)
  * 
  *         if res == SPP_OK:             # <<<<<<<<<<<<<<
@@ -944,7 +898,7 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
   __pyx_t_2 = ((__pyx_v_res == SPP_OK) != 0);
   if (__pyx_t_2) {
 
-    /* "spp.pyx":69
+    /* "spp.pyx":66
  * 
  *         if res == SPP_OK:
  *             return <object>(self.parser[0].buf[0].size)             # <<<<<<<<<<<<<<
@@ -952,7 +906,7 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_PyInt_FromSize_t(((__pyx_v_self->parser[0]).buf[0]).size); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_4 = __Pyx_PyInt_FromSize_t(((__pyx_v_self->parser[0]).buf[0]).size); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 66; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(((PyObject *)__pyx_t_4));
     __pyx_r = __pyx_t_4;
@@ -960,20 +914,20 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
     goto __pyx_L0;
   }
 
-  /* "spp.pyx":70
+  /* "spp.pyx":67
  *         if res == SPP_OK:
  *             return <object>(self.parser[0].buf[0].size)
  *         raise NoMemoryError             # <<<<<<<<<<<<<<
  * 
  *     def get(self):
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_NoMemoryError); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_NoMemoryError); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_Raise(__pyx_t_4, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "spp.pyx":57
+  /* "spp.pyx":54
  *         self.parser[0].handler = &handler
  * 
  *     def feed(self, text):             # <<<<<<<<<<<<<<
@@ -994,12 +948,12 @@ static PyObject *__pyx_pf_3spp_6Parser_2feed(struct __pyx_obj_3spp_Parser *__pyx
   return __pyx_r;
 }
 
-/* "spp.pyx":72
+/* "spp.pyx":69
  *         raise NoMemoryError
  * 
  *     def get(self):             # <<<<<<<<<<<<<<
- *         self.values[:] = []
- *         cdef int res = spp_parse(self.parser)
+ *         values = []
+ *         self.parser[0].priv = <void *>(values)
  */
 
 /* Python wrapper */
@@ -1016,6 +970,7 @@ static PyObject *__pyx_pw_3spp_6Parser_5get(PyObject *__pyx_v_self, CYTHON_UNUSE
 }
 
 static PyObject *__pyx_pf_3spp_6Parser_4get(struct __pyx_obj_3spp_Parser *__pyx_v_self) {
+  PyObject *__pyx_v_values = NULL;
   int __pyx_v_res;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1025,84 +980,93 @@ static PyObject *__pyx_pf_3spp_6Parser_4get(struct __pyx_obj_3spp_Parser *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("get", 0);
 
-  /* "spp.pyx":73
+  /* "spp.pyx":70
  * 
  *     def get(self):
- *         self.values[:] = []             # <<<<<<<<<<<<<<
+ *         values = []             # <<<<<<<<<<<<<<
+ *         self.parser[0].priv = <void *>(values)
+ *         cdef int res = spp_parse(self.parser)
+ */
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 70; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_values = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "spp.pyx":71
+ *     def get(self):
+ *         values = []
+ *         self.parser[0].priv = <void *>(values)             # <<<<<<<<<<<<<<
  *         cdef int res = spp_parse(self.parser)
  * 
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetSlice(__pyx_v_self->values, __pyx_t_1, 0, 0, NULL, NULL, &__pyx_slice__2, 0, 0, 1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  (__pyx_v_self->parser[0]).priv = ((void *)__pyx_v_values);
 
-  /* "spp.pyx":74
- *     def get(self):
- *         self.values[:] = []
+  /* "spp.pyx":72
+ *         values = []
+ *         self.parser[0].priv = <void *>(values)
  *         cdef int res = spp_parse(self.parser)             # <<<<<<<<<<<<<<
  * 
  *         if res == SPP_OK:
  */
   __pyx_v_res = spp_parse(__pyx_v_self->parser);
 
-  /* "spp.pyx":78
+  /* "spp.pyx":76
  *         if res == SPP_OK:
- *             return self.values
+ *             return values
  *         elif res == SPP_EBADFMT:             # <<<<<<<<<<<<<<
  *             raise BadFormatError
  *         return None
  */
   switch (__pyx_v_res) {
 
-    /* "spp.pyx":76
+    /* "spp.pyx":74
  *         cdef int res = spp_parse(self.parser)
  * 
  *         if res == SPP_OK:             # <<<<<<<<<<<<<<
- *             return self.values
+ *             return values
  *         elif res == SPP_EBADFMT:
  */
     case SPP_OK:
 
-    /* "spp.pyx":77
+    /* "spp.pyx":75
  * 
  *         if res == SPP_OK:
- *             return self.values             # <<<<<<<<<<<<<<
+ *             return values             # <<<<<<<<<<<<<<
  *         elif res == SPP_EBADFMT:
  *             raise BadFormatError
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_v_self->values);
-    __pyx_r = __pyx_v_self->values;
+    __Pyx_INCREF(__pyx_v_values);
+    __pyx_r = __pyx_v_values;
     goto __pyx_L0;
     break;
 
-    /* "spp.pyx":78
+    /* "spp.pyx":76
  *         if res == SPP_OK:
- *             return self.values
+ *             return values
  *         elif res == SPP_EBADFMT:             # <<<<<<<<<<<<<<
  *             raise BadFormatError
  *         return None
  */
     case SPP_EBADFMT:
 
-    /* "spp.pyx":79
- *             return self.values
+    /* "spp.pyx":77
+ *             return values
  *         elif res == SPP_EBADFMT:
  *             raise BadFormatError             # <<<<<<<<<<<<<<
  *         return None
  * 
  */
-    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_BadFormatError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_BadFormatError); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     break;
     default: break;
   }
 
-  /* "spp.pyx":80
+  /* "spp.pyx":78
  *         elif res == SPP_EBADFMT:
  *             raise BadFormatError
  *         return None             # <<<<<<<<<<<<<<
@@ -1114,12 +1078,12 @@ static PyObject *__pyx_pf_3spp_6Parser_4get(struct __pyx_obj_3spp_Parser *__pyx_
   __pyx_r = Py_None;
   goto __pyx_L0;
 
-  /* "spp.pyx":72
+  /* "spp.pyx":69
  *         raise NoMemoryError
  * 
  *     def get(self):             # <<<<<<<<<<<<<<
- *         self.values[:] = []
- *         cdef int res = spp_parse(self.parser)
+ *         values = []
+ *         self.parser[0].priv = <void *>(values)
  */
 
   /* function exit code */
@@ -1128,12 +1092,13 @@ static PyObject *__pyx_pf_3spp_6Parser_4get(struct __pyx_obj_3spp_Parser *__pyx_
   __Pyx_AddTraceback("spp.Parser.get", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_values);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "spp.pyx":82
+/* "spp.pyx":80
  *         return None
  * 
  *     def clear(self):             # <<<<<<<<<<<<<<
@@ -1163,7 +1128,7 @@ static PyObject *__pyx_pf_3spp_6Parser_6clear(struct __pyx_obj_3spp_Parser *__py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("clear", 0);
 
-  /* "spp.pyx":83
+  /* "spp.pyx":81
  * 
  *     def clear(self):
  *         spp_clear(self.parser)             # <<<<<<<<<<<<<<
@@ -1172,7 +1137,7 @@ static PyObject *__pyx_pf_3spp_6Parser_6clear(struct __pyx_obj_3spp_Parser *__py
  */
   spp_clear(__pyx_v_self->parser);
 
-  /* "spp.pyx":84
+  /* "spp.pyx":82
  *     def clear(self):
  *         spp_clear(self.parser)
  *         return <object>(self.parser[0].buf[0].size)             # <<<<<<<<<<<<<<
@@ -1180,14 +1145,14 @@ static PyObject *__pyx_pf_3spp_6Parser_6clear(struct __pyx_obj_3spp_Parser *__py
  *     def __dealloc__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_FromSize_t(((__pyx_v_self->parser[0]).buf[0]).size); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyInt_FromSize_t(((__pyx_v_self->parser[0]).buf[0]).size); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(((PyObject *)__pyx_t_1));
   __pyx_r = __pyx_t_1;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "spp.pyx":82
+  /* "spp.pyx":80
  *         return None
  * 
  *     def clear(self):             # <<<<<<<<<<<<<<
@@ -1206,7 +1171,7 @@ static PyObject *__pyx_pf_3spp_6Parser_6clear(struct __pyx_obj_3spp_Parser *__py
   return __pyx_r;
 }
 
-/* "spp.pyx":86
+/* "spp.pyx":84
  *         return <object>(self.parser[0].buf[0].size)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1231,7 +1196,7 @@ static void __pyx_pf_3spp_6Parser_8__dealloc__(struct __pyx_obj_3spp_Parser *__p
   spp_t *__pyx_t_1;
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "spp.pyx":87
+  /* "spp.pyx":85
  * 
  *     def __dealloc__(self):
  *         cdef spp_t *parser = self.parser             # <<<<<<<<<<<<<<
@@ -1240,14 +1205,14 @@ static void __pyx_pf_3spp_6Parser_8__dealloc__(struct __pyx_obj_3spp_Parser *__p
   __pyx_t_1 = __pyx_v_self->parser;
   __pyx_v_parser = __pyx_t_1;
 
-  /* "spp.pyx":88
+  /* "spp.pyx":86
  *     def __dealloc__(self):
  *         cdef spp_t *parser = self.parser
  *         spp_free(parser)             # <<<<<<<<<<<<<<
  */
   spp_free(__pyx_v_parser);
 
-  /* "spp.pyx":86
+  /* "spp.pyx":84
  *         return <object>(self.parser[0].buf[0].size)
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -1259,103 +1224,7 @@ static void __pyx_pf_3spp_6Parser_8__dealloc__(struct __pyx_obj_3spp_Parser *__p
   __Pyx_RefNannyFinishContext();
 }
 
-/* "spp.pyx":48
- * 
- *     cdef spp_t *parser
- *     cdef public object values             # <<<<<<<<<<<<<<
- * 
- *     def __init__(self):
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_3spp_6Parser_6values_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_3spp_6Parser_6values_1__get__(PyObject *__pyx_v_self) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3spp_6Parser_6values___get__(((struct __pyx_obj_3spp_Parser *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_3spp_6Parser_6values___get__(struct __pyx_obj_3spp_Parser *__pyx_v_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__get__", 0);
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_self->values);
-  __pyx_r = __pyx_v_self->values;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3spp_6Parser_6values_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_3spp_6Parser_6values_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3spp_6Parser_6values_2__set__(((struct __pyx_obj_3spp_Parser *)__pyx_v_self), ((PyObject *)__pyx_v_value));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3spp_6Parser_6values_2__set__(struct __pyx_obj_3spp_Parser *__pyx_v_self, PyObject *__pyx_v_value) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__set__", 0);
-  __Pyx_INCREF(__pyx_v_value);
-  __Pyx_GIVEREF(__pyx_v_value);
-  __Pyx_GOTREF(__pyx_v_self->values);
-  __Pyx_DECREF(__pyx_v_self->values);
-  __pyx_v_self->values = __pyx_v_value;
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* Python wrapper */
-static int __pyx_pw_3spp_6Parser_6values_5__del__(PyObject *__pyx_v_self); /*proto*/
-static int __pyx_pw_3spp_6Parser_6values_5__del__(PyObject *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_3spp_6Parser_6values_4__del__(((struct __pyx_obj_3spp_Parser *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static int __pyx_pf_3spp_6Parser_6values_4__del__(struct __pyx_obj_3spp_Parser *__pyx_v_self) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("__del__", 0);
-  __Pyx_INCREF(Py_None);
-  __Pyx_GIVEREF(Py_None);
-  __Pyx_GOTREF(__pyx_v_self->values);
-  __Pyx_DECREF(__pyx_v_self->values);
-  __pyx_v_self->values = Py_None;
-
-  /* function exit code */
-  __pyx_r = 0;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
 static PyObject *__pyx_tp_new_3spp_Parser(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_3spp_Parser *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -1363,19 +1232,15 @@ static PyObject *__pyx_tp_new_3spp_Parser(PyTypeObject *t, CYTHON_UNUSED PyObjec
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_3spp_Parser *)o);
-  p->values = Py_None; Py_INCREF(Py_None);
   return o;
 }
 
 static void __pyx_tp_dealloc_3spp_Parser(PyObject *o) {
-  struct __pyx_obj_3spp_Parser *p = (struct __pyx_obj_3spp_Parser *)o;
   #if PY_VERSION_HEX >= 0x030400a1
-  if (unlikely(Py_TYPE(o)->tp_finalize) && !_PyGC_FINALIZED(o)) {
+  if (unlikely(Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
   }
   #endif
-  PyObject_GC_UnTrack(o);
   {
     PyObject *etype, *eval, *etb;
     PyErr_Fetch(&etype, &eval, &etb);
@@ -1384,39 +1249,7 @@ static void __pyx_tp_dealloc_3spp_Parser(PyObject *o) {
     --Py_REFCNT(o);
     PyErr_Restore(etype, eval, etb);
   }
-  Py_CLEAR(p->values);
   (*Py_TYPE(o)->tp_free)(o);
-}
-
-static int __pyx_tp_traverse_3spp_Parser(PyObject *o, visitproc v, void *a) {
-  int e;
-  struct __pyx_obj_3spp_Parser *p = (struct __pyx_obj_3spp_Parser *)o;
-  if (p->values) {
-    e = (*v)(p->values, a); if (e) return e;
-  }
-  return 0;
-}
-
-static int __pyx_tp_clear_3spp_Parser(PyObject *o) {
-  PyObject* tmp;
-  struct __pyx_obj_3spp_Parser *p = (struct __pyx_obj_3spp_Parser *)o;
-  tmp = ((PyObject*)p->values);
-  p->values = Py_None; Py_INCREF(Py_None);
-  Py_XDECREF(tmp);
-  return 0;
-}
-
-static PyObject *__pyx_getprop_3spp_6Parser_values(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_3spp_6Parser_6values_1__get__(o);
-}
-
-static int __pyx_setprop_3spp_6Parser_values(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
-  if (v) {
-    return __pyx_pw_3spp_6Parser_6values_3__set__(o, v);
-  }
-  else {
-    return __pyx_pw_3spp_6Parser_6values_5__del__(o);
-  }
 }
 
 static PyMethodDef __pyx_methods_3spp_Parser[] = {
@@ -1424,11 +1257,6 @@ static PyMethodDef __pyx_methods_3spp_Parser[] = {
   {"get", (PyCFunction)__pyx_pw_3spp_6Parser_5get, METH_NOARGS, 0},
   {"clear", (PyCFunction)__pyx_pw_3spp_6Parser_7clear, METH_NOARGS, 0},
   {0, 0, 0, 0}
-};
-
-static struct PyGetSetDef __pyx_getsets_3spp_Parser[] = {
-  {(char *)"values", __pyx_getprop_3spp_6Parser_values, __pyx_setprop_3spp_6Parser_values, 0, 0},
-  {0, 0, 0, 0, 0}
 };
 
 static PyTypeObject __pyx_type_3spp_Parser = {
@@ -1455,17 +1283,17 @@ static PyTypeObject __pyx_type_3spp_Parser = {
   0, /*tp_getattro*/
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
-  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_3spp_Parser, /*tp_traverse*/
-  __pyx_tp_clear_3spp_Parser, /*tp_clear*/
+  0, /*tp_traverse*/
+  0, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
   __pyx_methods_3spp_Parser, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_3spp_Parser, /*tp_getset*/
+  0, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -1540,27 +1368,16 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "spp.pyx":61
+  /* "spp.pyx":58
  * 
  *         if hasattr(text, 'encode'):
  *             btext = text.encode('utf8', 'strict')             # <<<<<<<<<<<<<<
  *         else:
  *             btext = text  # assumed utf8 string
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_n_s_utf8, __pyx_n_s_strict); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_n_s_utf8, __pyx_n_s_strict); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 58; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-
-  /* "spp.pyx":73
- * 
- *     def get(self):
- *         self.values[:] = []             # <<<<<<<<<<<<<<
- *         cdef int res = spp_parse(self.parser)
- * 
- */
-  __pyx_slice__2 = PySlice_New(Py_None, Py_None, Py_None); if (unlikely(!__pyx_slice__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_slice__2);
-  __Pyx_GIVEREF(__pyx_slice__2);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -2214,104 +2031,6 @@ bad:
     return;
 }
 #endif
-
-static CYTHON_INLINE int __Pyx_PyObject_SetSlice(
-        PyObject* obj, PyObject* value, Py_ssize_t cstart, Py_ssize_t cstop,
-        PyObject** _py_start, PyObject** _py_stop, PyObject** _py_slice,
-        int has_cstart, int has_cstop, CYTHON_UNUSED int wraparound) {
-#if CYTHON_COMPILING_IN_CPYTHON
-    PyMappingMethods* mp;
-#if PY_MAJOR_VERSION < 3
-    PySequenceMethods* ms = Py_TYPE(obj)->tp_as_sequence;
-    if (likely(ms && ms->sq_ass_slice)) {
-        if (!has_cstart) {
-            if (_py_start && (*_py_start != Py_None)) {
-                cstart = __Pyx_PyIndex_AsSsize_t(*_py_start);
-                if ((cstart == (Py_ssize_t)-1) && PyErr_Occurred()) goto bad;
-            } else
-                cstart = 0;
-        }
-        if (!has_cstop) {
-            if (_py_stop && (*_py_stop != Py_None)) {
-                cstop = __Pyx_PyIndex_AsSsize_t(*_py_stop);
-                if ((cstop == (Py_ssize_t)-1) && PyErr_Occurred()) goto bad;
-            } else
-                cstop = PY_SSIZE_T_MAX;
-        }
-        if (wraparound && unlikely((cstart < 0) | (cstop < 0)) && likely(ms->sq_length)) {
-            Py_ssize_t l = ms->sq_length(obj);
-            if (likely(l >= 0)) {
-                if (cstop < 0) {
-                    cstop += l;
-                    if (cstop < 0) cstop = 0;
-                }
-                if (cstart < 0) {
-                    cstart += l;
-                    if (cstart < 0) cstart = 0;
-                }
-            } else {
-                if (PyErr_ExceptionMatches(PyExc_OverflowError))
-                    PyErr_Clear();
-                else
-                    goto bad;
-            }
-        }
-        return ms->sq_ass_slice(obj, cstart, cstop, value);
-    }
-#endif
-    mp = Py_TYPE(obj)->tp_as_mapping;
-    if (likely(mp && mp->mp_ass_subscript))
-#endif
-    {
-        int result;
-        PyObject *py_slice, *py_start, *py_stop;
-        if (_py_slice) {
-            py_slice = *_py_slice;
-        } else {
-            PyObject* owned_start = NULL;
-            PyObject* owned_stop = NULL;
-            if (_py_start) {
-                py_start = *_py_start;
-            } else {
-                if (has_cstart) {
-                    owned_start = py_start = PyInt_FromSsize_t(cstart);
-                    if (unlikely(!py_start)) goto bad;
-                } else
-                    py_start = Py_None;
-            }
-            if (_py_stop) {
-                py_stop = *_py_stop;
-            } else {
-                if (has_cstop) {
-                    owned_stop = py_stop = PyInt_FromSsize_t(cstop);
-                    if (unlikely(!py_stop)) {
-                        Py_XDECREF(owned_start);
-                        goto bad;
-                    }
-                } else
-                    py_stop = Py_None;
-            }
-            py_slice = PySlice_New(py_start, py_stop, Py_None);
-            Py_XDECREF(owned_start);
-            Py_XDECREF(owned_stop);
-            if (unlikely(!py_slice)) goto bad;
-        }
-#if CYTHON_COMPILING_IN_CPYTHON
-        result = mp->mp_ass_subscript(obj, py_slice, value);
-#else
-        result = value ? PyObject_SetItem(obj, py_slice, value) : PyObject_DelItem(obj, py_slice);
-#endif
-        if (!_py_slice) {
-            Py_DECREF(py_slice);
-        }
-        return result;
-    }
-    PyErr_Format(PyExc_TypeError,
-        "'%.200s' object does not support slice %.10s",
-        Py_TYPE(obj)->tp_name, value ? "assignment" : "deletion");
-bad:
-    return -1;
-}
 
 static PyObject *__Pyx_CalculateMetaclass(PyTypeObject *metaclass, PyObject *bases) {
     Py_ssize_t i, nbases = PyTuple_GET_SIZE(bases);

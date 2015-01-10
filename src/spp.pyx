@@ -45,13 +45,10 @@ cdef void handler(spp_t *parser, char *data, size_t size, int index):
 cdef class Parser:
 
     cdef spp_t *parser
-    cdef public object values
 
     def __init__(self):
         cdef spp_t *parser = spp_new()
         self.parser = parser
-        self.values = []
-        self.parser[0].priv = <void *>(self.values)
         self.parser[0].handler = &handler
 
     def feed(self, text):
@@ -70,11 +67,12 @@ cdef class Parser:
         raise NoMemoryError
 
     def get(self):
-        self.values[:] = []
+        values = []
+        self.parser[0].priv = <void *>(values)
         cdef int res = spp_parse(self.parser)
 
         if res == SPP_OK:
-            return self.values
+            return values
         elif res == SPP_EBADFMT:
             raise BadFormatError
         return None
