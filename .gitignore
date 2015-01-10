@@ -1,0 +1,9 @@
+.*.swn
+.*.swo
+.*.swp
+venv
+build
+dist
+*-egg.info
+*.out
+*.o
