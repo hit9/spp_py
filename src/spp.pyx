@@ -55,7 +55,14 @@ cdef class Parser:
         self.parser[0].handler = &handler
 
     def feed(self, text):
-        cdef char *data = text
+        cdef bytes btext
+
+        if hasattr(text, 'encode'):
+            btext = text.encode('utf8', 'strict')
+        else:
+            btext = text  # assumed utf8 string
+
+        cdef char *data = btext
         cdef int res = spp_feed(self.parser, data)
 
         if res == SPP_OK:
@@ -71,6 +78,10 @@ cdef class Parser:
         elif res == SPP_EBADFMT:
             raise BadFormatError
         return None
+
+    def clear(self):
+        spp_clear(self.parser)
+        return <object>(self.parser[0].buf[0].size)
 
     def __dealloc__(self):
         cdef spp_t *parser = self.parser
