@@ -1,5 +1,16 @@
 # coding=utf8
 
+import sys
+
+if sys.version > '3':
+    # binary: cast str to bytes
+    binary = lambda string: bytes(string, 'utf8')
+    # string: cast bytes to native string
+    string = lambda binary: binary.decode('utf8')
+else:
+    binary = str
+    string = str
+
 cdef extern from 'hbuf.h':
     ctypedef struct hbuf_t:
         size_t size
@@ -38,8 +49,8 @@ class BadFormatError(SPPException):
 
 cdef void handler(spp_t *parser, char *data, size_t size, int index):
     values = <object>(parser[0].priv)
-    cdef bytes py_string = data[:size]
-    values.append(py_string)
+    cdef bytes value = data[:size]
+    values.append(string(value))
 
 
 cdef class Parser:
@@ -51,8 +62,9 @@ cdef class Parser:
         self.parser = parser
         self.parser[0].handler = &handler
 
-    def feed(self, buf):
-        cdef char *data = buf
+    def feed(self, string):
+        cdef bytes value = binary(string)
+        cdef char *data = value
         cdef int res = spp_feed(self.parser, data)
 
         if res == SPP_OK:
