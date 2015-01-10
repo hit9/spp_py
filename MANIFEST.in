@@ -1,0 +1,11 @@
+recursive-include src *
+recursive-exclude src .*.swp
+recursive-exclude src .*.swo
+recursive-exclude src .*.swn
+recursive-exclude src .*.out
+recursive-exclude src .*.o
+recursive-exclude src .*.pyc
+recursive-exclude venv *
+recursive-exclude dist *
+recursive-exclude build *
+recursive-exclude spp.egg-info *
