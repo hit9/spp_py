@@ -51,15 +51,8 @@ cdef class Parser:
         self.parser = parser
         self.parser[0].handler = &handler
 
-    def feed(self, text):
-        cdef bytes btext
-
-        if hasattr(text, 'encode'):
-            btext = text.encode('utf8', 'strict')
-        else:
-            btext = text  # assumed utf8 string
-
-        cdef char *data = btext
+    def feed(self, buf):
+        cdef char *data = buf
         cdef int res = spp_feed(self.parser, data)
 
         if res == SPP_OK:
