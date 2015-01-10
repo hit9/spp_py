@@ -4,6 +4,6 @@
 venv
 build
 dist
-*-egg.info
+*.egg-info
 *.out
 *.o
