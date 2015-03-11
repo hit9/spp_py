@@ -4,6 +4,10 @@ Simple Protocol Parser
 *Actually, this is [ssdb](http://ssdb.io)'s network protocol, and I think it can
 be used on other projects.*
 
+- Nodejs Port: https://github.com/hit9/spp_node
+- Lua Port: https://github.com/hit9/spp_lua
+
+
 Support Py2.6+/3.3+ (Input `str` and out `str`, (the str means bytes in py2.x and unicode in py3.x)).
 
 Protocol
