@@ -29,7 +29,7 @@ cdef extern from 'spp.h':
         void (*handler)(spp_t *, char *, size_t, int)
 
     spp_t *spp_new()
-    int spp_feed(spp_t *, char *)
+    int spp_feed(spp_t *, char *, size_t)
     void *spp_free(spp_t *)
     int spp_parse(spp_t *)
     void spp_clear(spp_t *)
@@ -65,7 +65,8 @@ cdef class Parser:
     def feed(self, string):
         cdef bytes value = binary(string)
         cdef char *data = value
-        cdef int res = spp_feed(self.parser, data)
+        cdef size_t size = len(value)
+        cdef int res = spp_feed(self.parser, data, size)
 
         if res == SPP_OK:
             return <object>(self.parser[0].buf[0].size)
