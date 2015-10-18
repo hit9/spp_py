@@ -4,7 +4,7 @@ from setuptools import setup, Extension
 
 setup(
     name='spp',
-    version='0.0.6',
+    version='0.0.7',
     author='hit9',
     author_email='hit9@icloud.com',
     description='My Simple Protocol Parser For Python,'
